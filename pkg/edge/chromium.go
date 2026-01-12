@@ -570,6 +570,10 @@ func (e *Chromium) NotifyParentWindowPositionChanged() error {
 }
 
 func (e *Chromium) Focus() {
+	// The controller may be nil if Focus is called before initialization is complete.
+	if e.controller == nil {
+		return
+	}
 	err := e.controller.MoveFocus(COREWEBVIEW2_MOVE_FOCUS_REASON_PROGRAMMATIC)
 	if err != nil {
 		e.errorCallback(err)
