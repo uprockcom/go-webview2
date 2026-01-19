@@ -286,10 +286,18 @@ func (e *Chromium) Eval(script string) {
 }
 
 func (e *Chromium) Show() error {
+	// The controller may be nil if Show is called before initialization is complete.
+	if e.controller == nil {
+		return nil
+	}
 	return e.controller.PutIsVisible(true)
 }
 
 func (e *Chromium) Hide() error {
+	// The controller may be nil if Hide is called before initialization is complete.
+	if e.controller == nil {
+		return nil
+	}
 	return e.controller.PutIsVisible(false)
 }
 
